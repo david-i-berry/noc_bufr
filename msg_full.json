@@ -1,0 +1,67 @@
+{
+  "header":{
+    "section0":{
+        "bufr":{"width":4,"value":"BUFR","kind":"CCITT IA5"},
+        "length":{"width":3,"value":0,"kind":"int"},
+        "version":{"width":1,"value":4,"kind":"int"}
+    },
+    "section1" : {
+        "length":                     {"width":3, "value":22, "kind":"int"},
+        "master_table":               {"width":1, "value":0,    "kind":"int"},
+        "originating_centre":         {"width":2, "value":65535, "kind":"int"},
+        "sub_centre":                 {"width":2, "value":65535, "kind":"int"},
+        "update_sequence":            {"width":1, "value":0, "kind":"int"},
+        "optional_section":           {"width":1, "value":0, "kind":"int"},
+        "data_category":              {"width":1, "value":1, "kind":"int"},
+        "international_sub_category": {"width":1, "value":6, "kind":"int"},
+        "local_sub_category":         {"width":1, "value":255, "kind":"int"},
+        "master_table_verions":       {"width":1, "value":0, "kind":"int"},
+        "local_table_version":        {"width":1, "value":255, "kind":"int"},
+        "year":                       {"width":2, "value":2019, "kind":"int"},
+        "month":                      {"width":1, "value":2, "kind":"int"},
+        "day":                        {"width":1, "value":27, "kind":"int"},
+        "hour":                       {"width":1, "value":23, "kind":"int"},
+        "minute":                     {"width":1, "value":6, "kind":"int"},
+        "second":                     {"width":1, "value":0, "kind":"int"},
+        "optional":                   {"width":0, "value":null, "kind":"int"}
+    },
+    "section2": {
+        "length":    {"width":3, "value":4, "kind":"int"},
+        "zero":      {"width":1, "value":0, "kind":"int"},
+        "local_use": {"width":0, "value":null, "kind":"int"}
+    },
+    "section3":{
+        "length":         {"width":3, "value":9,  "kind":"int"},
+        "zero":           {"width":1, "value":0,     "kind":"int"},
+        "number_subsets": {"width":2, "value":null,  "kind":"int"},
+        "flags":          {"width":1, "value":128,  "kind":"int"},
+        "descriptors":    {"width":2, "value":["308009"], "kind":"list"}
+    },
+    "section4" : {
+        "length": {"width":3, "value":null, "kind":"int"},
+        "zero":   {"width":1, "value":0, "kind":"int"},
+        "data":   {"width":0, "value":null, "kind":"bin"}
+    },
+    "section5":  {
+        "sevens":{"width":4, "value":"7777", "kind":"CCITT IA5"}
+    }
+  },
+  "data":{
+    "by_report": true,
+    "number_subsets":5,
+    "replications":[
+      [1],
+      [1],
+      [1],
+      [1],
+      [1]
+    ],
+    "subsets":[
+      ["2ICI2",135.0,7.0,1,2019.0,3.0,5.0,2.0,0.0,36.800000000000004,12.8,null,null,null,101970.0,-40.0,6.0,null,null,287.15000000000003,null,285.65000000000003,284.35,null,null,null,20000.0,null,null,null,null,13.0,5.0,1.0,null,62.0,61.0,60.0,1.0,null,null,null,null,null,null,null,null,null,null,null,null,null,0.0,null,287.15000000000003,null,null,null,null,null,2.0,1.0,388.0,null,null,388.0,null,null,2.0,-1.0,0.0,0.0,null,-12.0,null,-1.0,null,null,null,-12.0,0.0,null,-12.0,0.0,null,null,null,12,2,-10.0,230.0,8.200000000000001,null,-10.0,null,null,-60.0,null,null],
+      ["2ICI2",90.0,7.0,1,2019.0,3.0,5.0,14.0,0.0,36.0,15.6,null,null,null,101930.0,-120.0,6.0,null,null,288.15000000000003,null,287.15000000000003,286.35,null,null,null,20000.0,null,null,null,null,25.0,0.0,0.0,8000.0,30.0,20.0,11.0,1.0,null,null,null,null,null,null,null,null,null,null,null,null,null,2.0,null,287.15000000000003,null,null,null,null,null,4.0,1.0,388.0,null,null,388.0,null,null,2.0,-1.0,0.0,0.0,null,-12.0,null,-1.0,null,null,null,-12.0,0.0,null,-12.0,0.0,null,null,null,12,2,-10.0,280.0,7.7,null,-10.0,null,null,-60.0,null,null],
+      ["2ICI2",90.0,7.0,1,2019.0,3.0,5.0,11.0,0.0,36.2,14.8,null,null,null,102080.0,100.0,2.0,null,null,288.15000000000003,null,286.15000000000003,284.45,null,null,null,20000.0,null,null,null,null,13.0,7.0,1.0,200.0,31.0,20.0,10.0,1.0,null,null,null,null,null,null,null,null,null,null,null,null,null,2.0,null,287.55,null,null,null,null,null,3.0,1.0,260.0,5.0,2.0,null,null,null,2.0,-1.0,0.0,0.0,null,-12.0,null,-1.0,null,null,null,-12.0,0.0,null,-12.0,0.0,null,null,null,12,2,-10.0,260.0,7.2,null,-10.0,null,null,-60.0,null,null],
+      ["2ICI2",90.0,7.0,1,2019.0,3.0,5.0,5.0,0.0,36.5,13.5,null,null,null,101970.0,0.0,4.0,null,null,287.65000000000003,null,286.15000000000003,284.85,null,null,null,null,null,null,null,null,null,5,null,null,62,61,60,1.0,null,null,null,null,null,null,null,null,null,null,null,null,null,2.0,null,287.05,null,null,null,null,null,16.0,1.0,290.0,16.0,2.0,null,null,null,2.0,-1.0,0.0,0.0,null,-12.0,null,-1.0,null,null,null,-12.0,0.0,null,-12.0,0.0,null,null,null,12,2,-10.0,240.0,5.7,null,-10.0,null,null,-60.0,null,null],
+      ["2ICI2",90.0,7.0,1,2019.0,3.0,5.0,10.0,0.0,36.2,14.5,null,null,null,102080.0,80.0,2.0,null,null,289.15000000000003,null,287.15000000000003,285.55,null,null,null,20000.0,null,null,null,null,13.0,7.0,1.0,300.0,31.0,20.0,10.0,1.0,null,null,null,null,null,null,null,null,null,null,null,null,null,2.0,null,287.35,null,null,null,null,null,3.0,1.0,260.0,5.0,2.0,null,null,null,2.0,-1.0,0.0,0.0,null,-12.0,null,-1.0,null,null,null,-12.0,0.0,null,-12.0,0.0,null,null,null,12,2,-10.0,260.0,7.2,null,-10.0,null,null,-60.0,null,null]
+    ]
+  }
+}
