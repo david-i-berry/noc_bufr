@@ -7,15 +7,16 @@ from bitarray import bitarray
 def encode_message( json_message ):
     msg = json_message["header"]
     the_data = json_message["data"]
-
     # first we need to calculate size of the data
     data_length = 0
     nsubsets = the_data['number_subsets']
+    print('{} subsets in message'.format(nsubsets))
     for subset in range( nsubsets ):
         replicators = the_data["replications"][subset].copy()
         descriptors = expand_sequence(msg['section3']['descriptors']['value'], replicators)
         descriptors.reset_index(inplace=True)
         data_length += descriptors.BUFR_DataWidth_Bits.sum()
+    print("descriptors expanded")
     # expand so multiple of 8
     if data_length % 8 > 0:
         data_length = data_length + (8 - data_length % 8)
@@ -54,8 +55,11 @@ def encode_message( json_message ):
             units = descriptors.loc[i, 'BUFR_Unit']
             msng = pow(2, width) - 1
             val = the_data["subsets"][subset][i]
+            val_input = val
             # now pack if required and fill to width
             if units == 'CCITT IA5':
+                if val is None:
+                    val = ""
                 val = ''.join(format(ord(y), 'b').zfill(8) for y in val.rjust(int(width / 8)))
                 val = val.zfill( width )
             else:
@@ -63,9 +67,16 @@ def encode_message( json_message ):
                     val = msng
                 else:
                     val = int(round(val * pow(10, scale) - offset))
+                assert val >= 0, 'Error, val < 0 when converting to binary'
                 val = format( int(val), 'b').zfill( width )
             # now append to list of values
+            fh = open('log.txt','a')
+            print( '{}, {}, {}, {}, {}, {}, {}'.format(
+                descriptors.loc[i,'ElementName_en'],scale, width, offset, units, val_input, val), file = fh )
+            fh.close()
             vals.append(val)
+            assert len(val) == width, \
+                'Bad width of value after encoding for '.format( descriptors.loc[i,'ElementName_en']  )
         # now concatenate all values for report together
         bitsOut += ''.join(vals)
     # now calculate number of bytes and fill
@@ -75,6 +86,8 @@ def encode_message( json_message ):
         bitsOut = bitsOut + ''.zfill( 8 - pack )
     nbytes = int( len(bitsOut) / 8 )
     # check encoded and filled data is equal to expected
+    print(nbytes)
+    print(data_length)
     assert nbytes == data_length
     # now copy to section 4
     msg['section4']['data']['value'] = bitsOut
@@ -92,15 +105,31 @@ def encode_message( json_message ):
 
 def main( argv ):
 
-    with open("msg_full.json") as fd:
-        msg_full = json.load(fd)
+    files_to_encode = ['Melonhead_1.json','Melonhead_2.json','Cabot.json']
+    files_to_encode = ['Melonhead_1.json']
+    for fn in files_to_encode :
+        print( 'Encoding {} ... '.format(fn) )
+        with open(fn) as fd:
+            msg_full = json.load(fd)
+        print("json loaded, encoding message")
+        bitsOut = encode_message(msg_full)
 
-    bitsOut = encode_message( msg_full )
+        outname = fn.replace('.json','.bufr')
+        out_fd = open(outname,'wb')
+        bitarray( bitsOut ).tofile( out_fd )
+        out_fd.close()
+
+    #with open("msg_full.json") as fd:
+ #   with open("Melonhead.json") as fd:
+ #       msg_full = json.load(fd)
+ #   print("json loaded, encoding message")
+ #   bitsOut = encode_message( msg_full )
 
     # save to file
-    file_out = open('test.bufr', 'wb')
-    bitarray( bitsOut ).tofile(file_out)
-    file_out.close()
+
+#    file_out = open('test.bufr', 'wb')
+#    bitarray( bitsOut ).tofile(file_out)
+#    file_out.close()
 
 if __name__ == '__main__':
     main(sys.argv[1:])

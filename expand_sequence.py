@@ -2,12 +2,13 @@ import pandas as pd
 bufr_tables = "./BUFR_TABLES/"
 table_A = pd.read_csv(bufr_tables+'/BUFR_31_0_0_TableA_en.txt',sep=',', dtype='object')
 table_B = pd.read_csv(bufr_tables+'/BUFRCREX_31_0_0_TableB_en.txt',sep=',', dtype='object')
+table_B = pd.read_csv(bufr_tables+'/BUFRCREX_TableB_en.txt',sep=',', dtype='object')
 table_B['BUFR_DataWidth_Bits'] = table_B['BUFR_DataWidth_Bits'].map(int)
 table_B['BUFR_Scale'] = table_B['BUFR_Scale'].map(int)
 table_B['BUFR_ReferenceValue'] = table_B['BUFR_ReferenceValue'].map(float)
 table_C = pd.read_csv(bufr_tables+'/BUFR_31_0_0_TableC_en.txt',sep=',', dtype='object')
 table_D = pd.read_csv(bufr_tables+'/BUFR_31_0_0_TableD_en.txt',sep=',', dtype='object')
-
+table_D = pd.read_csv(bufr_tables+'/BUFR_TableD_en.txt',sep=',', dtype='object')
 operators = {
     '01':{'name':'change_data_width',         'field':'BUFR_DataWidth_Bits', 'value':0},
     '02':{'name':'change_scale',              'field':'BUFR_Scale',          'value':0},
@@ -71,7 +72,6 @@ def pack_section( section ):
     bits = ''
     # encode section 0 and add to bits
     for key in section:
-        #print( section[key] )
         if section[key]['width'] > 0:
             if section[key]['kind'] == 'CCITT IA5' :
                 word = ''.join( format( ord(x), 'b').zfill(8) for x in section[key]['value'])
